@@ -7,8 +7,9 @@ const TextAreaControl = ({label,onChange,value,disabled,type,placeholder,Require
         <label>
       {label} {Required && <sup>*</sup>}
         </label>
-        <textarea  name={name} type={type} onChange={onChange} value={value} disabled={disabled}
-               placeholder={placeholder}/>
+        <textarea   type={type} placeholder={placeholder} onChange={onChange} value={value}
+         disabled={disabled}
+          name={name} />
                 {error && <span className='error-message'> {label} is Required</span> }
     </div>
   )

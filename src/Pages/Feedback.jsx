@@ -1,7 +1,8 @@
-  import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextControl  from "../Components/TextboxControl";
   import TextAreaControl from "../Components/TextareaControl";
   import ButtonControl from "../Components/ButtonControl";
+
 
   const Feedback = () => {
 
@@ -22,11 +23,13 @@ import TextControl  from "../Components/TextboxControl";
 
   const initialState = {
       name:"",
-      description:""
+      description:"",
+  
   }
    const [error,setError] = useState({
       name:false,
-      description:false
+      description:false,
+     
   })
 
     const [data,setData] = useState(initialState)
@@ -35,28 +38,36 @@ import TextControl  from "../Components/TextboxControl";
 
      const handleTextChange = (e)=>{
       console.log(e.target)
-      setError((prev)=>({...prev,[e.target.name]:false}))
+     setError((prev)=>({...prev,[e.target.name]:false}))
       setData((prev)=>({...prev,[e.target.name]:e.target.value}))
-
-  }
-
+   
+      
+      }
+    
+    
   const handleSubmit = ()=>{
       if(data.name==''){
     setError((prev)=>({...prev,'name':true}))
 
       }
-          if(data.description==''){
+          if(data.description ==''){
                 setError((prev)=>({...prev,'description':true}))
 
       }
+        if(data.email==""){
+          setError((prev)=>({...prev,'email':true}))
+        }
 
-      if(data.name=='' || data.description==""){
+      if(data.name=='' || data.description=="" || data.email==""){
+        console.log("Name:", data.name);
+       console.log("Desc:", data.description);
           return;
         }
 
             setFeedbackData((prev)=>[...prev,{
                 name:data.name,
                 description:data.description,
+              
                 createdOn:currentTime()
             }])
           setData(initialState)
@@ -87,8 +98,9 @@ return(
             Required={true}
             error={error.description}
             onChange={handleTextChange}
-                value={data.description}
+            value={data.description}
           />
+           
           <ButtonControl btnName={"Submit feedback"} onClick={handleSubmit} />
         </div>
         <div className="feedback-list">
@@ -97,7 +109,7 @@ return(
             <p>{feedbackData.length ||0} entries</p>
           </div>
           <ul className="feedback-data">
-            {feedbackData && feedbackData?.length>0 ? feedbackData?.map((item, index) => (
+            {feedbackData && feedbackData?.length>0 ? feedbackData.map((item, index) => (
               <li key={index}>
                 <p className="input-datas">
                   <span className="name">{item.name} </span>
